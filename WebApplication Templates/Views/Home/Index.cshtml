@@ -1,0 +1,773 @@
+﻿@using WebApplication_Templates.ViewModels
+@{
+    ViewData["Title"] = "Home Page";
+}
+@model HomeViewModels
+<div class="page-content">
+
+    <header id="site_header" class="header mobile-menu-hide">
+        <div class="header-content">
+            <div class="header-photo">
+                <img src="@Model.MasterAbout.ImageURL" alt="@Model.MasterAbout.Name">
+            </div>
+            <div class="header-titles">
+                <h2>@Model.MasterAbout.Name</h2>
+                <h4>@Model.MasterPositions.FirstOrDefault(x => x.IsPrimary)?.Name</h4>
+            </div>
+        </div>
+        
+        <ul class="main-menu">
+            <li class="active">
+                <a href="#home" class="nav-anim">
+                    <span class="menu-icon lnr lnr-home"></span>
+                    <span class="link-text">Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="#about-me" class="nav-anim">
+                    <span class="menu-icon lnr lnr-user"></span>
+                    <span class="link-text">About Me</span>
+                </a>
+            </li>
+            <li>
+                <a href="#resume" class="nav-anim">
+                    <span class="menu-icon lnr lnr-graduation-hat"></span>
+                    <span class="link-text">Resume</span>
+                </a>
+            </li>
+            <li>
+                <a href="#portfolio" class="nav-anim">
+                    <span class="menu-icon lnr lnr-briefcase"></span>
+                    <span class="link-text">Portfolio</span>
+                </a>
+            </li>
+        
+            <li>
+                <a href="#contact" class="nav-anim">
+                    <span class="menu-icon lnr lnr-envelope"></span>
+                    <span class="link-text">Contact</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="social-links">
+            <ul>
+                @foreach(var item in Model.MasterSocialMedia)
+                {
+                    <li><a href="@item.Link" target="_blank"><i class="@item.Icon"></i></a></li>
+
+                }
+            </ul>
+        </div>
+
+        <div class="header-buttons">
+            <a href="@Model.MasterAbout.CVUrl" download="Downlad CV " dtarget="_blank" class="btn btn-primary">Download CV</a>
+        </div>
+
+        <div class="copyrights">© 2020 All rights reserved.</div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <!-- End Mobile Navigation -->
+    <!-- Arrows Nav -->
+    <div class="lmpixels-arrows-nav">
+        <div class="lmpixels-arrow-right"><i class="lnr lnr-chevron-right"></i></div>
+        <div class="lmpixels-arrow-left"><i class="lnr lnr-chevron-left"></i></div>
+    </div>
+    <!-- End Arrows Nav -->
+
+    <div class="content-area">
+        <div class="animated-sections">
+            <!-- Home Subpage -->
+            <section data-id="home" class="animated-section start-page">
+                <div class="section-content vcentered">
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <div class="title-block">
+                                <h2>@Model.MasterAbout.Name</h2>
+                                <div class="owl-carousel text-rotation">
+                                    @foreach(var item in Model.MasterPositions)
+                                    {
+                                        <div class="item">
+                                            <div class="sp-subtitle">@item.Name" </div>
+                                        </div>
+                                    }
+                                   
+                            
+                                   @*  <div class="item">
+                                        <div class="sp-subtitle">Frontend-developer</div>
+                                    </div> *@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <!-- End of Home Subpage -->
+            <!-- About Me Subpage -->
+            <section data-id="about-me" class="animated-section">
+                <div class="page-title">
+                    @*                     <h2>About <span>Me</span></h2>*@
+                    @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "AboutMe")?.Title)
+                    
+                 </div>
+
+<div class="section-content">
+    <!-- Personal Information -->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-7">
+                            <p>@Model.MasterAbout.Desc</p>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-5">
+                            <div class="info-list">
+                                <ul>
+                                    <li>
+                                        <span class="title">Age</span>
+                                        <span class="value">@Model.MasterAbout.Age</span>
+                                    </li>
+
+                                    <li>
+                                        <span class="title">Residence</span>
+                                        <span class="value">@Model.MasterAbout.Country</span>
+                                    </li>
+
+                                    <li>
+                                        <span class="title">Address</span>
+                                        <span class="value">@Model.MasterAbout.Address</span>
+                                    </li>
+
+                                    <li>
+                                        <span class="title">e-mail</span>
+                                        <span class="value">@Model.MasterAbout.Email</span>
+                                    </li>
+
+                                    <li>
+                                        <span class="title">Phone</span>
+                                        <span class="value">@Model.MasterAbout.PhoneNumber</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End of Personal Information -->
+
+                    <div class="white-space-50"></div>
+
+                    <!-- Services -->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12">
+                            <div class="block-title">
+                                @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "What I Do")?.Title)
+@*                                 <h3>What <span>I Do</span></h3>
+ *@                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @foreach (var item in Model.MasterServices)
+                        {
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="col-inner">
+                                    <div class="info-list-w-icon">
+                                        <div class="info-block-w-icon">
+                                            <div class="ci-icon">
+                                                <i class="@item.Icon"></i>
+                                            </div>
+
+                                            <div class="ci-text">
+                                                <h4>@item.Name</h4>
+                                                <p>@item.Desc</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                                          
+            <!-- End of Services -->
+
+            <div class="white-space-30"></div>
+
+            <!-- Testimonials -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="block-title">
+                                @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Testimonials")?.Title)
+
+@*                         <h3>Testimonials</h3>
+ *@                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="testimonials owl-carousel">
+                        @foreach (var item in Model.MasterTestimonials)
+                        {
+                           <div class="testimonial">
+                            <div class="img">
+                                <img src="@item.ImageURL" alt="@item.Name">
+                            </div>
+                            <div class="text">
+                                <p>@item.Desc</p>
+                            </div>
+
+                            <div class="author-info">
+                                <h4 class="author">@item.Name</h4>
+                                <h5 class="company">@item.Title</h5>
+                                <div class="icon">
+                                    <i class="fas fa-quote-right"></i>
+                                </div>
+                            </div>
+                            
+                        </div>
+                            
+                        }
+                        </div>
+                        </div>
+                        </div>
+           
+            <!-- End of Testimonials -->
+
+            <div class="white-space-50"></div>
+
+            <!-- Clients -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="block-title">
+                                                        @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Cilents")?.Title)
+
+@*                         <h3>Cilents</h3>
+ *@                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="clients owl-carousel">
+                         @foreach (var item in Model.MasterClients)
+                         {
+                        <div class="client-block">
+                            <a href="#" target="_blank" title="Logo">
+                                <img src="@item.ImageURL" alt="Logo">
+                            </a>
+                        </div>
+                        }
+                      
+  
+                    </div>
+                </div>
+            </div>
+            <!-- End of Clients -->
+
+            <div class="white-space-50"></div>
+
+            <!-- Pricing -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+
+                    <div class="block-title">
+                        @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Pricing")?.Title)
+@*                         <h3>Pricing</h3>
+ *@                    </div>
+                </div>
+            </div>
+    <div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div class="fw-pricing clearfix row">
+            @foreach (var item in Model.MasterPlans)
+            {
+                <div class="fw-package-wrap col-md-6">
+                    <div class="fw-package">
+                        <div class="fw-heading-row">
+                            <span>@item.Name</span>
+                        </div>
+
+                        <div class="fw-pricing-row">
+                            <span>@item.Price</span>
+                            <small>@item.PricePeriod</small>
+                        </div>
+
+                        <div class="fw-button-row">
+                            <a href="#" target="_self" class="btn btn-secondary">
+                                Free Trial
+                            </a>
+                        </div>
+
+                        @foreach (var items in Model.MasterPlanItems
+                            .Where(x => x.PlanId == item.Id))
+                        {
+                            <div class="fw-default-row">
+                                @items.Desc
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+            <!-- End of Pricing -->
+
+            <div class="white-space-50"></div>
+
+            <!-- Fun Facts -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+
+                    <div class="block-title">
+                        @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Fun Facts")?.Title)
+                   </div>
+                </div>
+            </div>
+
+            <div class="row">
+               
+                @foreach(var item in Model.MasterFacts)
+                {
+                    <div class="col-xs-12 col-sm-4">
+                    <div class="fun-fact gray-default">
+                  <i class="@item.Icon"></i>
+                  <h4>@item.Title</h4>
+                  <span class="fun-fact-block-value">@item.Number</span>
+                  <span class="fun-fact-block-text"></span>
+                   </div>
+                </div>
+                }
+            
+                   
+                 </div>
+           
+         
+            <!-- End of Fun Facts -->
+
+        </div>
+    </section>
+    <!-- End of About Me Subpage -->
+    <!-- Resume Subpage -->
+    <section data-id="resume" class="animated-section">
+        <div class="page-title">
+                                    @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Resume")?.Title)
+
+        </div>
+
+        <div class="section-content">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-7">
+
+                    <div class="block-title">
+                          @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Education")?.Title)
+                    </div>
+                            @foreach (var item in Model.MasterEducation) { 
+                            <div class="timeline timeline-second-style clearfix">
+                        <div class="timeline-item clearfix">
+                            <div class="left-part">
+                                <h5 class="item-period">@item.Year</h5>
+                                <span class="item-company">@item.University</span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="right-part">
+                                <h4 class="item-title">@item.Title</h4>
+                                <p>@item.Desc</p>
+                            </div>
+                        </div>
+                        </div>
+                        }
+
+                        
+
+                    <div class="white-space-50"></div>
+
+                    <div class="block-title">
+                         @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Experience")?.Title)
+                    </div>
+                    @foreach (var item in Model.MasterExperience) { 
+                    <div class="timeline timeline-second-style clearfix">
+                        <div class="timeline-item clearfix">
+                            <div class="left-part">
+                                <h5 class="item-period">@item.StartYear - @item.EndYear</h5>
+                                <span class="item-company">@item.Title</span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="right-part">
+                                <h4 class="item-title">@item.Title</h4>
+                                <p>@item.Desc</p>
+                            </div>
+                        </div>
+                        </div>
+                        }
+                       </div>
+<div class="col-xs-12 col-sm-5">
+
+    <div class="block-title">
+        @Html.Raw(Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Design Skills")?.Title)
+
+    </div>
+
+    <div class="skills-info skills-second-style">
+        @foreach (var item in Model.MasterSkills
+            .Where(x => !x.IsSoftSkill && !x.IsKnowledge))
+        {
+            <div class="skill clearfix">
+                <h4>@item.Name</h4>
+                <div class="skill-value">@item.Percentage%</div>
+            </div>
+
+            <div class="skill-container">
+                <div class="skill-percentage"
+                     style="width:@(item.Percentage)%">
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="white-space-10"></div>
+
+    <div class="block-title">
+         @Html.Raw(Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Coding Skills")?.Title)
+    </div>
+
+    <div class="skills-info skills-second-style">
+        @foreach (var item in Model.MasterSkills .Where(x => x.IsSoftSkill))
+           
+        {
+            <div class="skill clearfix">
+                <h4>@item.Name</h4>
+                <div class="skill-value">@item.Percentage%</div>
+            </div>
+
+            <div class="skill-container">
+                <div class="skill-percentage"
+                     style="width:@(item.Percentage)%">
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="white-space-10"></div>
+
+    <div class="block-title">
+        @Html.Raw(Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Knowledges")?.Title)
+            
+    </div>
+
+    <ul class="knowledges">
+        @foreach (var item in Model.MasterSkills.Where(x => x.IsKnowledge))
+            
+        {
+            <li>@item.Name</li>
+        }
+    </ul>
+
+</div>
+                
+
+            <div class="white-space-50"></div>
+
+            <!-- Certificates -->
+            <div class="row">
+                <div class="col-xs-12 col-sm-12">
+                    <div class="block-title">
+                                            @Html.Raw(@Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Certificates")?.Title)
+
+                    </div>
+                </div>
+            </div>
+                  
+            <div class="row">
+                <!-- Certificate 1 -->
+                            @foreach (var item in Model.MasterCertificates)
+                            {
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="certificate-item clearfix">
+                                        <div class="certi-logo">
+                                            <img src="@item.ImageURL" alt="logo">
+                                        </div>
+
+                                        <div class="certi-content">
+                                            <div class="certi-title">
+                                                <h4>@item.Title</h4>
+                                            </div>
+                                            <div class="certi-id">
+                                                <span>Membership ID: @item.MembershipId</span>
+                                            </div>
+                                            <div class="certi-date">
+                                                <span>@item.Date</span>
+                                            </div>
+                                            <div class="certi-company">
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                <!-- End of Certificate 2 -->
+
+            </div>
+            <!-- End of Certificates -->
+        </div>
+    </section>
+    <!-- End of Resume Subpage -->
+    <!-- Portfolio Subpage -->
+   <!-- Portfolio Subpage -->
+<section data-id="portfolio" class="animated-section">
+
+    <div class="page-title">
+       
+           @Html.Raw(  Model.MasterTitles.FirstOrDefault(x => x.Keyword == "Portfolio")?.Title )
+            
+       
+    </div> 
+
+    <div class="section-content">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-12">
+
+                <!-- Portfolio Content -->
+                <div class="portfolio-content">
+
+                    <ul class="portfolio-filters">
+
+                        <li class="active">
+                            <a class="filter btn btn-sm btn-link"
+                               data-group="category_all">
+                                All
+                            </a>
+                        </li>
+
+                        @foreach (var category in Model.MasterCategory)
+                        {
+                            <li>
+                                <a class="filter btn btn-sm btn-link"
+                                   data-group="category_@category.Id">
+                                    @category.Name
+                                </a>
+                            </li>
+                        }
+
+                    </ul>
+
+
+                    
+                    <div class="portfolio-grid three-columns">
+
+                        @foreach (var item in Model.MasterPortfolio)
+                        {
+                            var category = Model.MasterCategory.FirstOrDefault(x => x.Id == item.CategoryId);
+                                
+
+                            <figure class="item lbimage"
+                                    data-groups='["category_all", "category_@item.CategoryId"]'>
+
+                                <div class="portfolio-item-img">
+
+                                    <img src="@item.ThumbnailImg"
+                                         alt="@item.Title"
+                                         title="" />
+
+                                    <a class="lightbox"
+                                       title="@item.Title"
+                                       href="@item.ViewImg">
+                                    </a>
+
+                                </div>
+
+                                @if (!string.IsNullOrEmpty(category?.Icon))
+                                {
+                                    <i class="@category.Icon"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-image"></i>
+                                }
+
+                                <h4 class="name">
+                                    @item.Title
+                                </h4>
+
+                                <span class="category">
+                                    @category?.Name
+                                </span>
+
+                            </figure>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</section>
+<section data-id="contact" class="animated-section">
+
+    <div class="page-title">
+        @Html.Raw( Model.MasterTitles .FirstOrDefault(x => x.Keyword == "Contact")?.Title )
+           </div>
+                   <div class="section-content">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-4">
+        @foreach (var item in Model.MasterContactUs)
+    {
+         <div class="lm-info-block gray-default">
+             @if (!string.IsNullOrEmpty(item.Icon))
+                        {
+                            <i class="@item.Icon"></i>
+                        }
+                           @if (!string.IsNullOrEmpty(item.Link))
+                        {
+                            
+                             <h4>   <a href="@item.Link"> @item.Title  </a> </h4>
+                               }        
+                              
+                           else
+                      {
+                            <h4>@item.Title</h4>
+                        }
+                <span class="lm-info-block-value"></span>
+                        <span class="lm-info-block-text"></span>
+
+                    </div>
+                }
+
+            </div>
+
+            <div class="col-xs-12 col-sm-8">
+
+                <div class="block-title">
+                      @Html.Raw( Model.MasterTitles .FirstOrDefault(x => x.Keyword == "How Can I Help You?")?.Title )
+@*                  <h3>  How Can I <span>Help You?</span></h3>
+ *@                    </div>
+                    <form class="contact-form" asp-controller="Home" asp-action="SendMessage"  method="post">
+                              @Html.AntiForgeryToken()
+
+                    <div class="messages"></div>
+
+                    <div class="controls two-columns">
+
+                        <div class="fields clearfix">
+
+                            <div class="left-column">
+
+                                <div class="form-group form-group-with-icon">
+
+                                    <input type="text"
+                                           name="Name"
+                                           id="form_name"
+                                           class="form-control"
+                                           required />
+
+                                    <label>Full Name</label>
+
+                                    <div class="form-control-border"></div>
+
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+
+                                <div class="form-group form-group-with-icon">
+                                    
+                                    <input type="email"
+                                           name="Email"
+                                           id="form_email"
+                                           class="form-control"
+                                           required />
+
+                                    <label>Email Address</label>
+
+                                    <div class="form-control-border"></div>
+
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+
+                                <div class="form-group form-group-with-icon">
+
+                                    <input type="text"
+                                           name="Subject"
+                                           id="form_subject"
+                                           class="form-control"
+                                           required />
+
+                                    <label>Subject</label>
+
+                                    <div class="form-control-border"></div>
+
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="right-column">
+
+                                <div class="form-group form-group-with-icon">
+
+                                    <textarea name="Message"
+                                              id="form_message"
+                                              class="form-control"
+                                              rows="7"
+                                              required></textarea>
+
+                                    <label>Message</label>
+
+                                    <div class="form-control-border"></div>
+
+                                    <div class="help-block with-errors"></div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <input type="submit"
+                               class="button btn-send"
+                               value="Send message" />
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+                     
+                        
+                      
+
+                       
+                   
+                      
+                    
+               
+
+                
+                     
+                     
+                    
+
+              

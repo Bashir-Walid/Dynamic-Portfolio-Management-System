@@ -1,0 +1,17 @@
+
+Table About: Id/ Image / Name / CV / Desc / DOB / Country / Address / Email /Phone
+Table Social Media: Id / Icon / Link
+Table Positions: Id / Name / IsPrimary
+Table Titles: Id / Title / Keyword
+Table services : Id / icon / paragraph /services Name/Title
+Table REveo:Id / Image /paragraph /clint name / Company Name/Title
+Table clint: Id / Image
+Taple Plans:Id/ name/priec / paragraph/ PerTime /Title
+Taple Fun Facts:Id/Icon/ name /numper of reveo /Title
+Taple Resume :Id /Title /name /paragraph/time/name of time 
+Taple Skills:Id/Title / Name /persnt
+Taple Knowledges:ID/ NAme
+Taple Certificates:Id/image/name/Membership Id /Time 
+Taple Portfolio :Id/ Title/ Image / name of catgory 
+Taple Contact :Id /Country/Email/Phone/icon/IsAvailable/Title
+Taple paragraph:Id/paragraph

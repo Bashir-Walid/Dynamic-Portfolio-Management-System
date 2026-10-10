@@ -1,0 +1,153 @@
+@echo off
+color 0F
+title Windows 10/11 Gaming Optimization by ALNAQBI
+setlocal EnableDelayedExpansion
+
+:menu
+cls
+echo ===============================================
+echo       Windows Gaming Optimizer -Bsher ebdah
+echo ===============================================
+echo.
+echo 1. Deep Clean (Logs, Temp, Cache, GPU)
+echo 2. Optimize Windows for Gaming (FPS Boost + Performance Boost + Deep Clean) [Y/N]
+echo 3. Restore Gaming Settings to Default [Y/N]
+echo 4. Exit
+echo.
+set /p choice="Choose an option (1-4): "
+
+if "!choice!"=="1" goto deepclean
+if "!choice!"=="2" goto confirmGamingOptimize
+if "!choice!"=="3" goto confirmRestoreGaming
+if "!choice!"=="4" exit
+goto menu
+
+:: Confirm Optimization
+:confirmGamingOptimize
+set /p confirm="Are you sure you want to optimize Windows for gaming? (Y/N): "
+if /i "!confirm!"=="Y" goto gamingoptimize
+goto menu
+
+:: Confirm Restore
+:confirmRestoreGaming
+set /p confirm="Are you sure you want to restore original gaming settings? (Y/N): "
+if /i "!confirm!"=="Y" goto restoregaming
+goto menu
+
+:: Deep Clean
+:deepclean
+cls
+echo Performing Deep Clean...
+echo ----------------------------
+
+echo Cleaning TEMP folders...
+rd /s /q "%TEMP%" 2>nul
+md "%TEMP%" 2>nul
+rd /s /q "C:\Windows\Temp" 2>nul
+md "C:\Windows\Temp" 2>nul
+
+echo Cleaning Prefetch...
+del /f /s /q C:\Windows\Prefetch\*.*
+
+echo Cleaning NVIDIA GPU Cache...
+rd /s /q "%LocalAppData%\NVIDIA\DXCache" 2>nul
+rd /s /q "%LocalAppData%\NVIDIA\GLCache" 2>nul
+
+echo Deleting all .log files in C:\ (this may take time)...
+for /r C:\ %%f in (*.log) do (
+  echo Deleting: %%f
+  del /f /q "%%f" 2>nul
+)
+echo Log file cleanup complete.
+
+echo Repairing desktop icon cache...
+taskkill /IM explorer.exe /F >nul
+DEL /A /Q "%localappdata%\IconCache.db" >nul
+DEL /A /F /Q "%localappdata%\Microsoft\Windows\Explorer\iconcache*" >nul
+start explorer.exe
+
+echo Deep Clean completed.
+pause
+goto menu
+
+:: Gaming Optimization
+:gamingoptimize
+cls
+echo Applying Gaming Optimization...
+echo ----------------------------
+
+:: Run Deep Clean as part of optimization
+call :deepclean_internal
+
+echo Enabling Ultimate Performance power plan...
+powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 >nul
+powercfg -setactive e9a42b02-d5df-448d-aa00-03f14749eb61
+
+echo Enabling Gaming Mode in registry...
+reg add "HKLM\SOFTWARE\Microsoft\GameBar" /v AllowAutoGameMode /t REG_DWORD /d 1 /f
+reg add "HKCU\SOFTWARE\Microsoft\GameBar" /v AutoGameModeEnabled /t REG_DWORD /d 1 /f
+
+echo Disabling unnecessary services...
+sc stop "SysMain" >nul
+sc config "SysMain" start= disabled >nul
+sc stop "WSearch" >nul
+sc config "WSearch" start= disabled >nul
+
+echo Disabling Game DVR...
+reg add "HKCU\System\GameConfigStore" /v GameDVR_Enabled /t REG_DWORD /d 0 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AppCaptureEnabled /t REG_DWORD /d 0 /f
+
+echo Enabling Windows Defender protection...
+sc config WinDefend start= auto >nul
+sc start WinDefend >nul
+powershell -Command "Set-MpPreference -DisableRealtimeMonitoring $false"
+powershell -Command "Set-MpPreference -DisableIOAVProtection $false"
+
+echo Optimization completed successfully.
+
+set /p restart="Do you want to restart your PC now? (Y/N): "
+if /i "!restart!"=="Y" shutdown /r /t 5
+pause
+goto menu
+
+:: Deep Clean internal for reuse
+:deepclean_internal
+echo Cleaning TEMP, prefetch, GPU cache...
+rd /s /q "%TEMP%" 2>nul
+md "%TEMP%" 2>nul
+rd /s /q "C:\Windows\Temp" 2>nul
+md "C:\Windows\Temp" 2>nul
+del /f /s /q C:\Windows\Prefetch\*.*
+rd /s /q "%LocalAppData%\NVIDIA\DXCache" 2>nul
+rd /s /q "%LocalAppData%\NVIDIA\GLCache" 2>nul
+
+echo Deleting .log files (with progress)...
+for /r C:\ %%f in (*.log) do (
+  echo Deleting: %%f
+  del /f /q "%%f" 2>nul
+)
+echo Log file cleanup done.
+goto :eof
+
+:: Restore Gaming Defaults
+:restoregaming
+cls
+echo Restoring defaults...
+echo ----------------------------
+
+powercfg -setactive SCHEME_BALANCED
+
+reg add "HKCU\System\GameConfigStore" /v GameDVR_Enabled /t REG_DWORD /d 1 /f
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\GameDVR" /v AppCaptureEnabled /t REG_DWORD /d 1 /f
+
+sc config "SysMain" start= auto
+sc config "WSearch" start= delayed-auto
+sc start "SysMain"
+sc start "WSearch"
+
+echo Gaming settings restored.
+
+set /p restart="Do you want to restart your PC now? (Y/N): "
+if /i "!restart!"=="Y" shutdown /r /t 5
+pause
+goto menu

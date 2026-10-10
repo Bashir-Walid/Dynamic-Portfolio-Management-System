@@ -1,0 +1,58 @@
+﻿@using WebApplication_Templates.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_LoginLayout";
+}
+@model RegisterViewModels
+<div class="card">
+    <div class="card-body">
+    
+        <div class="text-center mt-4">
+            <div class="mb-3">
+                <a href="index.html" class="auth-logo">
+                    <img src="~/AdminTemplate/assets/images/logo-dark.png" height="30" class="logo-dark mx-auto" alt="">
+                    <img src="~/AdminTemplate/assets/images/logo-light.png" height="30" class="logo-light mx-auto" alt="">
+                </a>
+            </div>
+        </div>
+    
+        <h4 class="text-muted text-center font-size-18"><b>Register</b></h4>
+    
+        <div class="p-3">
+            <form class="form-horizontal mt-3" asp-action="Register" method="post">
+    
+                <div class="form-group mb-3 row">
+                    <div class="col-12">
+                        <input class="form-control" asp-for="UserName" placeholder="UserName">
+                    </div>
+                </div>
+    
+                <div class="form-group mb-3 row">
+                    <div class="col-12">
+                        <input class="form-control" asp-for="Password" placeholder="Password">
+                    </div>
+                </div>
+    
+                <div class="form-group mb-3 row">
+                    <div class="col-12">
+                        <input class="form-control" asp-for="ConfirmPassword" placeholder="Rewrite Password " >
+                    </div>
+                </div>
+    
+         
+    
+                <div class="form-group text-center row mt-3 pt-1">
+                    <div class="col-12">
+                        <button class="btn btn-info w-100 waves-effect waves-light" type="submit">Register</button>
+                    </div>
+                </div>
+    
+             
+            </form>
+            <!-- end form -->
+        </div>
+    </div>
+    <!-- end cardbody -->
+</div>

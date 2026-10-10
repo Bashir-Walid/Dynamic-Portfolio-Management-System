@@ -1,0 +1,327 @@
+﻿@model WebApplication_Templates.ViewModels.MasterPortfolioFullViewModels
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="card-title mb-0">Portfolio</h4>
+        </div>
+
+        <div class="card border mb-4">
+            <div class="card-body">
+
+                <h5 class="card-title mb-4">Add / Edit Portfolio</h5>
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <form asp-action="CreateOrUpdate"
+                              method="post"
+                              enctype="multipart/form-data">
+
+                            <div asp-validation-summary="ModelOnly"
+                                 class="text-danger"></div>
+
+                            <input type="hidden" asp-for="Id" />
+
+                            <div class="form-group mb-3">
+
+                                <label asp-for="Title"
+                                       class="control-label"></label>
+
+                                <input asp-for="Title"
+                                       class="form-control" />
+
+                                <span asp-validation-for="Title"
+                                      class="text-danger"></span>
+
+                            </div>
+
+                            <div class="form-group mb-3">
+
+                                <label class="control-label">
+                                    Portfolio Image
+                                </label>
+
+                                <input asp-for="ImageFile"
+                                       type="file"
+                                       class="form-control" />
+
+                            </div>
+
+                            <div class="form-group mb-3">
+
+                                <label asp-for="CategoryId"
+                                       class="control-label"></label>
+
+                                <select asp-for="CategoryId"
+                                        class="form-control">
+
+                                    <option value="">
+                                        Select MasterCategory
+                                    </option>
+
+                                    @foreach (var MasterCategory in Model.listet)
+                                    {
+                                        <option value="@MasterCategory.Id">
+                                            @MasterCategory.Name
+                                        </option>
+                                    }
+
+                                </select>
+
+                                <span asp-validation-for="CategoryId"
+                                      class="text-danger"></span>
+
+                            </div>
+
+                            <div class="form-group form-check mb-3">
+
+                                <label class="form-check-label">
+
+                                    <input class="form-check-input"
+                                           asp-for="IsActive" />
+
+                                    @Html.DisplayNameFor(model => model.IsActive)
+
+                                </label>
+
+                            </div>
+
+                            <div class="form-group">
+
+                                <input type="submit"
+                                       value="Save"
+                                       class="btn btn-primary" />
+
+                                <input type="reset"
+                                       value="Clear"
+                                       class="btn btn-warning" />
+
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+                        <th>Category</th>
+                        <th>Title</th>
+                        <th>Thumbnail</th>
+                        <th>View Image</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model.list)
+                    {
+                        <tr>
+
+                            <td>
+                                @Model.listet.FirstOrDefault(x => x.Id == item.CategoryId)?.Name
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+
+                            <td>
+
+                                @if (!string.IsNullOrWhiteSpace(item.ThumbnailImg))
+                                {
+                                    <img src="@item.ThumbnailImg"
+                                         width="90"
+                                         height="60"
+                                         style="object-fit:cover;" />
+                                }
+
+                            </td>
+
+                            <td>
+
+                                @if (!string.IsNullOrWhiteSpace(item.ViewImg))
+                                {
+                                    <img src="@item.ViewImg"
+                                         width="90"
+                                         height="60"
+                                         style="object-fit:cover;" />
+                                }
+
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+                                        Deactive
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td style="min-width:230px;">
+
+                                <a class="btn btn-outline-warning btn-sm btnEdit"
+                                       data-id="@item.Id"
+                                       data-categoryid="@item.CategoryId"
+                                       data-title="@item.Title"
+                                       data-isactive="@item.IsActive">
+                                    Edit
+                                </a>
+
+                                <form asp-action="ChangeStatus"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.Id" />
+
+                                    @if (item.IsActive)
+                                    {
+                                        <a class="btn btn-success btn-sm btnStatus">
+                                            Active
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-danger btn-sm btnStatus">
+                                            Deactive
+                                        </a>
+                                    }
+
+                                </form>
+
+                                <form asp-action="Delete"
+                                      method="post"
+                                      style="display:inline;">
+
+                                    <input type="hidden"
+                                           asp-for="DeleteId"
+                                           value="@item.Id" />
+
+                                    <a class="btn btn-danger btn-sm btnDelete">
+                                        Delete
+                                    </a>
+
+                                </form>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+        $(".btnEdit").click(function () {
+
+        var Id = $(this).data('id');
+        var IsActive = $(this).data('isactive');
+        var CategoryId = $(this).data('categoryid');
+        var Title = $(this).data('title');
+
+        $("#Id").val(Id);
+        $("#Title").val(Title);
+        $("#CategoryId").val(CategoryId);
+
+        $("#IsActive").prop(
+        'checked',
+        IsActive === true ||
+        IsActive === 'True' ||
+        IsActive === 'true'
+        );
+
+        });
+
+        $(".btnStatus").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "Do you want to change status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+        $(".btnDelete").click(function () {
+
+        var form = $(this).closest("form");
+
+        Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+
+        if (result.isConfirmed) {
+        form.submit();
+        }
+
+        });
+
+        });
+
+        });
+
+    </script>
+}

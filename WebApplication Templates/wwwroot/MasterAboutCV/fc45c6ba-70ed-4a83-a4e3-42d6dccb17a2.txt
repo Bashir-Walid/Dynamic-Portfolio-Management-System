@@ -1,0 +1,33 @@
+  Table SystemSettings: Id / Logo-Dark / Logo-Light / Bg-1 / Bg-2 / ReservationImage / Location / FooterText (Shared for all pages)
+
+Table Slider: Id / Image / Title / Brief / Desc (Home Page)
+
+Table About : Id / Title / Brief / Desc / Image / FooterDesc (Home + Aboutus)
+
+Table Titles : Id / Title / Desc / Keyword
+
+Table TransactionReservation : Id / FullName / EmailAddress / MobileNumber AvailableDateId
+
+Table AvailableDate : Id / Date (DateTime)
+
+Table Feedback : Id / Feedback / Image / Name / Title
+
+(one record)Table Banner: Id / Image / Title / Brief / Desc / IsPrimary
+
+Table Partners : Id / Image / Alt / Link 
+
+Table SocialMedia : Id / Icon / URL
+
+Table MasterContactUs : Id / Icon / Text / URL?
+
+Table OpeningTime: Id / Day / StartTime / EndTime / IsOpen
+
+Table TransactionNewsLetter : Id / Email 
+
+Table Services: Id / Title / Desc / Icon
+
+Table MenuCategory : Id / Name
+
+Table MenuItems: Id / Image / Title / FirstDesc / Price / MenuCategoryId / SecondDesc?/IsPopular
+
+Table TransactionContactUs : Id / FullName / EmailAddress / Subject / Message

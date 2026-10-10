@@ -1,0 +1,60 @@
+﻿@using WebApplication_Templates.ViewModels
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_LoginLayout";
+}
+@model LoginViewModels
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="text-center mt-4">
+            <div class="mb-3">
+                <a href="index.html" class="auth-logo">
+                    <img src="~/AdminTemplate/assets/images/logo-dark.png" height="30" class="logo-dark mx-auto" alt="">
+                    <img src="~/AdminTemplate/assets/images/logo-light.png" height="30" class="logo-light mx-auto" alt="">
+                </a>
+            </div>
+        </div>
+    
+        <h4 class="text-muted text-center font-size-18"><b>Login</b></h4>
+    
+        <div class="p-3">
+            <form class="form-horizontal mt-3" asp-action="Login" method="post">
+    
+                <div class="form-group mb-3 row">
+                    <div class="col-12">
+                        <input class="form-control" asp-for="UserName" placeholder="UserName">
+                    </div>
+                </div>
+    
+                <div class="form-group mb-3 row">
+                    <div class="col-12">
+                        <input class="form-control" asp-for="Password" placeholder="Password">
+                    </div>
+                </div>
+    
+                <div class="form-group mb-3 row">
+                    <div class="col-12">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" asp-for="RememberMe">
+                            <label class="form-label ms-1" asp-for="RememberMe">Remember me</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="form-group mb-3 text-center row mt-3 pt-1">
+                    <div class="col-12">
+                        <button class="btn btn-info w-100 waves-effect waves-light" type="submit">Log In</button>
+                    </div>
+                </div>
+    
+            
+            </form>
+        </div>
+        <!-- end -->
+    </div>
+    <!-- end cardbody -->
+</div>

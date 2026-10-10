@@ -1,0 +1,12 @@
+﻿@model string
+
+@{
+    var cssClass = ViewBag.CssClass?.ToString() ?? "";
+}
+
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    <img src="@Model"
+         alt="Avatar"
+         class="@cssClass" />
+}
