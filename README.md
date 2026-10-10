@@ -1,4 +1,4 @@
-أكيد، هذا README كامل للمشروع الثاني في بلوك واحد وجاهز للنسخ:
+
 
 ```md
 # Dynamic Portfolio Management System
